@@ -34,9 +34,9 @@ jobs:
         env:
            NODE_OPTIONS: '--openssl-legacy-provider'
         run: 
-          export APOTHEM_TESTNET_PRIVATE_KEY="003a99a11879ca1c5bb149936c360927cf4dbc559b1f08f42fc264ca8a3aee2b"
-          export APOTHEM_TESTNET_ENDPOINT_URL="https://apothem.xdcrpc.com"
-          export APOTHEM_DUMMY_ADDRESS="0x9999999999999999999999999999999999999999"
-          export APOTHEM_NATIVE_CURRENCY_LABEL="TXDC"
-          export APOTHEM_OWNER_ADDRESS="xdca954be2888e29e2ed362436ad3d254f2aff0720f"
+           APOTHEM_TESTNET_PRIVATE_KEY="003a99a11879ca1c5bb149936c360927cf4dbc559b1f08f42fc264ca8a3aee2b"
+           APOTHEM_TESTNET_ENDPOINT_URL="https://apothem.xdcrpc.com"
+           APOTHEM_DUMMY_ADDRESS="0x9999999999999999999999999999999999999999"
+           APOTHEM_NATIVE_CURRENCY_LABEL="TXDC"
+           APOTHEM_OWNER_ADDRESS="xdca954be2888e29e2ed362436ad3d254f2aff0720f"
           node dist/index.js --private-key $APOTHEM_TESTNET_PRIVATE_KEY --json-rpc $APOTHEM_TESTNET_ENDPOINT_URL --weth9-address $APOTHEM_DUMMY_ADDRESS --native-currency-label $APOTHEM_NATIVE_CURRENCY_LABEL --owner-address $APOTHEM_OWNER_ADDRESS

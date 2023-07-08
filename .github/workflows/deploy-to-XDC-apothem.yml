@@ -1,0 +1,36 @@
+name: Deploy to Testnets
+
+on:
+  workflow_dispatch:
+ 
+jobs:
+
+  deploy-to-testnets:
+    name: Deploy to testnets
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+          network: [apothem]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # if only_network is set, skip all steps until the value matches one of the entries in matrix.network
+      - name: Check only_network
+        if: ${{ github.event.inputs.only_network != '' && github.event.inputs.only_network != matrix.network }}
+        run: echo "DO_SKIP=1" >> "$GITHUB_ENV"
+
+      - name: Use Node.js 18.x
+        if: env.DO_SKIP != 1
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Deploy to ${{ matrix.network }}
+        env:
+           NODE_OPTIONS: '--openssl-legacy-provider'
+        run: node dist/index.js --private-key $APOTHEM_TESTNET_PRIVATE_KEY --json-rpc $APOTHEM_TESTNET_ENDPOINT_URL --weth9-address $APOTHEM_DUMMY_ADDRESS --native-currency-label $APOTHEM_NATIVE_CURRENCY_LABEL --owner-address $APOTHEM_OWNER_ADDRESS
